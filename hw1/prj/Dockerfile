@@ -1,8 +1,11 @@
 FROM bellsoft/liberica-openjdk-alpine:14
-ARG APPLICATION_FROM
 
-COPY ./build/libs/$APPLICATION_FROM.jar /usr/app/app.jar
-COPY ./config/application.properties /usr/app/application.properties
+ENV SERVER_PORT=8083
+ENV SPRINGPROFILES=acturator
+
+COPY ./build/libs/**.jar /usr/app/app.jar
+COPY ./config/application.yml /usr/app/application.yml
 WORKDIR /usr/app
-EXPOSE 8083
-CMD java -jar app.jar --spring.config.location=file:/usr/app/application.properties
+EXPOSE $SERVER_PORT
+
+CMD java -Djava.security.egd=file:/dev/urandom -Dserver.port=$SERVER_PORT -Dserver.address=0.0.0.0 -jar app.jar --spring.config.location=file:/usr/app/application.yml
