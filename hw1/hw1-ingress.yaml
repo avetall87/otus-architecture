@@ -7,6 +7,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /health
 spec:
   rules:
+    - host: arch.homework
     - http:
         paths:
           - path: /otusapp/vitaliy($|/)(.*)
