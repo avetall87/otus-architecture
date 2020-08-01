@@ -2,7 +2,6 @@ package ru.spb.avetall.hwarch.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -29,11 +28,11 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfo(
-                "Rest Api for user service",
-                "Home work 2",
-                "API TOS",
-                "Terms of service",
-                new Contact("Vitaliy Aleksandrov", "-", "-"),
-                "License of API", "API license URL", Collections.emptyList());
+                "Rest Api для сервиса работы с пользователями",
+                "Домашняя работа № 2",
+                "Версия - 1.0",
+                "",
+                new Contact("Александров Виталий", "", ""),
+                "", "", Collections.emptyList());
     }
 }
