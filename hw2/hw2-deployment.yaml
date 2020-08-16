@@ -19,7 +19,7 @@ spec:
         app: hw2-arch-health
     spec:
       containers:
-        - image: avetall87/hw2-arch-health:v2
+        - image: avetall87/hw1-arch-health:v2
           imagePullPolicy: Always
           name: hw1-arch-health
           ports:
@@ -33,7 +33,23 @@ spec:
             periodSeconds: 20
           readinessProbe:
             httpGet:
-              path: /actuator/health/readiness
+              path: /actuator/health/readinessStateProbeIndicator
               port: 8083
             failureThreshold: 5
             periodSeconds: 20
+          env:
+            - name: SECRETS_USER
+              valueFrom:
+                secretKeyRef:
+                  name: spring-security
+                  key: spring.user.name
+            - name: SECRETS_USER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: spring-security
+                  key: spring.user.password
+            - name: DATABASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: application-configmap
+                  key: spring.application.config.db

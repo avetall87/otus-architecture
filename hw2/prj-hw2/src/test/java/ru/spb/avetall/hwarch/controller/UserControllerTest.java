@@ -21,7 +21,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = "application.yml")
 class UserControllerTest {
 
     private static final String ALL_USERS_ETALON = "\"id\":1,\"firstName\":\"ADMIN\",\"lastName\":\"-\",\"patronymic\":\"-\",\"birthDate\":\"26.07.2020 00:00:00\",\"description\":\"Super admin !\",\"phone\":\"+7-911-123-12-12\",\"email\":\"test@mail.ru\"";
