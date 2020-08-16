@@ -10,6 +10,8 @@ public interface UserService {
     UserDto findByEmail(String email);
     
     void deleteById(Long id);
+    void deleteByEmail(String email);
     void update(UserDto userDto);
+    void updateByEmail(UserDto userDto);
     void create(UserDto userDto);
 }

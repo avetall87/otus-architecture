@@ -19,6 +19,8 @@ import java.util.stream.Collectors;
 
 import static java.lang.String.*;
 import static java.util.Objects.*;
+import static org.apache.commons.lang3.StringUtils.isBlank;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static org.thymeleaf.util.StringUtils.*;
 import static ru.spb.avetall.hwarch.service.mapper.UserMapper.*;
 
@@ -78,12 +80,44 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
+    public void deleteByEmail(String email) {
+        if (isBlank(email)) {
+            throw new IllegalArgumentException("User email is null, can't delete current user !");
+        }
+
+        if(userRepository.existsUserByEmail(email)) {
+            userRepository.deleteByEmail(email);
+        } else {
+            throw new IllegalArgumentException(format("User with email %s not found !", email));
+        }
+    }
+
+    @Override
+    @Transactional
     public void update(UserDto userDto) {
         if (isNull(userDto) || isNull(userDto.getId())) {
-            throw new UserOrIdIsNullException("User or id is null, can't update current user !");
+            throw new UserOrIdIsNullException("User or user.id is null, can't update current user !");
         }
 
         userRepository.save(mapToUser(userDto));
+    }
+
+    @Override
+    public void updateByEmail(UserDto userDto) {
+        if (isNull(userDto) || isNull(userDto.getEmail())) {
+            throw new UserOrIdIsNullException("User or user.email is null, can't update current user !");
+        }
+
+        User userByEmail = userRepository.findByEmail(userDto.getEmail());
+
+        if (nonNull(userByEmail) && isNotBlank(userByEmail.getEmail())) {
+            userDto.setId(userByEmail.getId());
+            userRepository.save(mapToUser(userDto));
+        } else {
+            throw new IllegalStateException("User by email was not found !");
+        }
+
+
     }
 
     @Override

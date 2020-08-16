@@ -74,6 +74,23 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(th.getMessage());            
         }
     }
+
+    @PutMapping(value = "/update/email")
+    @ApiOperation(value = "Обновляет данные пользователя по электронной почте", response = ResponseEntity.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Данные пользователь успешно обновлены"),
+            @ApiResponse(code = 500, message = "При обновлении данных пользователя произошла ошибка")
+    }
+    )
+    public ResponseEntity<String> updateByEmail(@RequestBody UserDto userDto) {
+        try {
+            userService.updateByEmail(userDto);
+            return ResponseEntity.ok().build();
+        } catch (Throwable th) {
+            log.error("User controller. Update user exception", th);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(th.getMessage());
+        }
+    }
     
     @DeleteMapping("/delete/{id}")
     @ApiOperation(value = "Удаляет пользователя по идентификатору пользователя", response = ResponseEntity.class)
@@ -87,9 +104,25 @@ public class UserController {
             userService.deleteById(id);
             return ResponseEntity.ok().build();
         } catch (Throwable th) {
-            log.error("User controller. Delete user exception", th);
+            log.error("User controller. Delete user by id exception", th);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(th.getMessage());
+        }
+    }
 
+    @DeleteMapping("/delete/email/{email}")
+    @ApiOperation(value = "Удаляет пользователя по электронной почте пользователя", response = ResponseEntity.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Пользователь успешно удален"),
+            @ApiResponse(code = 500, message = "При удалении пользователя произошла ошибка")
+    }
+    )
+    public ResponseEntity<String> deleteByEmail(@PathVariable String email) {
+        try {
+            userService.deleteByEmail(email);
+            return ResponseEntity.ok().build();
+        } catch (Throwable th) {
+            log.error("User controller. Delete user by email exception", th);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(th.getMessage());
         }
     }
     
