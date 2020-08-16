@@ -9,7 +9,7 @@
 - Добавляем репозиторий с помощью команды: helm repo add bitnami https://charts.bitnami.com/bitnami
 - Устанавливаем базу данных с помощь команды: helm install hw2-postgresql bitnami/postgresql -f pg-values.yaml -n hw2
 #### В итоге должены появится: Pod, StatefulSet, PVC, Service для postgresql
-4. Делоим приложения
+4. Делоим приложение
 - kubectl apply -f hw2-deployment.yaml -n hw2
 5. Создаем сервис для приложения
 - kubectl apply -f hw2-service.yaml -n hw2
