@@ -16,4 +16,5 @@
 6. Создаем ингресс для доступа из вне
 - kubectl apply -f hw2-ingress.yaml -n hw2
 
-### Для обращения к сервису нужно в Minikube активировать addon ingress и выполнить команду Minikube ip, данный ip адрес будет внешним адресом для ингреса.Далее можно добавить запись в /etc/hosts: <ingress ip> arch.homework
+---
+Для обращения к сервису нужно в Minikube активировать addon ingress и выполнить команду: **minikube ip**, данный ip адрес будет внешним адресом для ингреса. Далее можно добавить запись в /etc/hosts: <ingress ip> arch.homework
