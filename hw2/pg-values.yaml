@@ -117,7 +117,7 @@ replication:
  ## NOTE: It cannot be > slaveReplicas
  numSynchronousReplicas: 0
  ## Replication Cluster application name. Useful for defining multiple replication policies
- ## applicationName: hw2-postgres
+ applicationName: hw2-postgres
 
 ## PostgreSQL admin password (used when `postgresqlUsername` is not `postgres`)
 ## ref: https://github.com/bitnami/bitnami-docker-postgresql/blob/master/README.md#creating-a-database-user-on-first-run (see note!)
