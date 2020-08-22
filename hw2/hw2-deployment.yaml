@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hw2-arch-health-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hw2-arch-health
+  minReadySeconds: 15
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: hw2-arch-health
+    spec:
+      containers:
+        - image: avetall87/hw1-arch-health:v2
+          imagePullPolicy: Always
+          name: hw1-arch-health
+          ports:
+            - containerPort: 8083
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8083
+            failureThreshold: 5
+            initialDelaySeconds: 10
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readinessStateProbeIndicator
+              port: 8083
+            failureThreshold: 5
+            periodSeconds: 20
+          env:
+            - name: SECRETS_USER
+              valueFrom:
+                secretKeyRef:
+                  name: spring-security
+                  key: spring.user.name
+            - name: SECRETS_USER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: spring-security
+                  key: spring.user.password
+            - name: DATABASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: application-configmap
+                  key: spring.application.config.db
