@@ -1,0 +1,38 @@
+application:
+    password:
+      salt: supperSecretKey
+
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: ${DATABASE_URL}
+    username: ${SECRETS_USER}
+    password: ${SECRETS_USER_PASSWORD}
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+
+server:
+  port: 8083
+
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: "*"
+        exclude: env,beans
+  health:
+    probes:
+      enabled: true
+    livenessstate:
+      enabled: true
+    readynessstate:
+      enabled: true
+    diskspace:
+      enabled: true
+  endpoint:
+    health:
+      show-details: always

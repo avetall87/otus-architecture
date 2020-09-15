@@ -1,0 +1,49 @@
+application:
+    password:
+      salt: supperSecretKey
+
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgrespass
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+
+server:
+  port: 8083
+
+management:
+  metrics:
+    web:
+      server:
+        request:
+          autotime:
+            enabled: true
+    export:
+      prometheus:
+        enabled: true
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: "*"
+        exclude: env,beans
+    prometheus:
+      enabled: true
+  health:
+    probes:
+      enabled: true
+    livenessstate:
+      enabled: true
+    readynessstate:
+      enabled: true
+    diskspace:
+      enabled: true
+  endpoint:
+    health:
+      show-details: always

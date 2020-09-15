@@ -1,0 +1,302 @@
+{
+	"info": {
+		"_postman_id": "baef6059-dfb8-4abe-aa30-15f925aadd68",
+		"name": "User Api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Найти всех пользователей",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e40b4913-5a35-41b2-aa26-6e215f3d40fc",
+						"exec": [
+							"pm.test(\"Find all users\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[0].id).to.eql(1);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}/otusapp/vitaliy/api/v1/user/find/all",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"otusapp",
+						"vitaliy",
+						"api",
+						"v1",
+						"user",
+						"find",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Найти всех пользователей по электронной почте",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e40b4913-5a35-41b2-aa26-6e215f3d40fc",
+						"exec": [
+							"pm.test(\"Find users by email\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.email).to.eql(\"test@mail.ru\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}/otusapp/vitaliy/api/v1/user/find/email/test@mail.ru",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"otusapp",
+						"vitaliy",
+						"api",
+						"v1",
+						"user",
+						"find",
+						"email",
+						"test@mail.ru"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Найти всех пользователй по имени",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "204e65cc-a362-4d64-9ffe-4e705fde2485",
+						"exec": [
+							"pm.test(\"Find all users by firstName\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[0].firstName).to.eql(\"ADMIN\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}/otusapp/vitaliy/api/v1/user//find/firstName/ADMIN",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"otusapp",
+						"vitaliy",
+						"api",
+						"v1",
+						"user",
+						"",
+						"find",
+						"firstName",
+						"ADMIN"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Создание нового пользователя",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e7ed0deb-66dd-4deb-bd9e-dc4ef1c0c094",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"firstName\":\"Иванов\",\"lastName\":\"Иван\",\"patronymic\":\"Петрович\",\"birthDate\":\"26.07.2003 00:00:00\",\"description\":\"Тестовый пользователь\",\"phone\":\"+7-911-456-78-91\",\"email\":\"test_user@mail.ru\",\"password\":\"new_password\"}"
+				},
+				"url": {
+					"raw": "http://{{ip}}/otusapp/vitaliy/api/v1/user/create",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"otusapp",
+						"vitaliy",
+						"api",
+						"v1",
+						"user",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Обновление пользователя",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e4419ee4-869a-4aeb-96d0-331a01834748",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\":2,\"firstName\":\"Иван\",\"lastName\":\"Иванов\",\"patronymic\":\"Петрович\",\"birthDate\":\"26.07.2003 00:00:00\",\"description\":\"Тестовый пользователь\",\"phone\":\"7-911-456-78-91\",\"email\":\"test_user@mail.ru\"}"
+				},
+				"url": {
+					"raw": "http://{{ip}}/otusapp/vitaliy/api/v1/user/update/email",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"otusapp",
+						"vitaliy",
+						"api",
+						"v1",
+						"user",
+						"update",
+						"email"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Удаление пользователя",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f2697e7d-d246-408a-8ff7-9a9663ebdab7",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}/otusapp/vitaliy/api/v1/user/delete/email/test_user@mail.ru",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"otusapp",
+						"vitaliy",
+						"api",
+						"v1",
+						"user",
+						"delete",
+						"email",
+						"test_user@mail.ru"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "75aa204e-8e56-43c1-8eef-426639a71cf7",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "08e7df36-0439-4c8e-9678-7138a4826f09",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "0f557e1a-2233-408c-a0bd-711a0fb08634",
+			"key": "ip",
+			"value": "192.168.64.7"
+		},
+		{
+			"id": "acb45f76-a7ca-4499-bfdd-c4ade74ce360",
+			"key": "userId",
+			"value": "2"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
