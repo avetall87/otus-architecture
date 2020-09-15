@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: arch-health-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: arch-health
+  minReadySeconds: 15
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: arch-health
+    spec:
+      containers:
+        - image: avetall87/arch-health:v3
+          imagePullPolicy: Always
+          name: arch-health
+          ports:
+            - containerPort: 8083
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8083
+            failureThreshold: 5
+            initialDelaySeconds: 120
+            periodSeconds: 120
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readinessStateProbeIndicator
+              port: 8083
+            failureThreshold: 5
+            periodSeconds: 20
+          env:
+            - name: SECRETS_USER
+              valueFrom:
+                secretKeyRef:
+                  name: spring-security
+                  key: spring.user.name
+            - name: SECRETS_USER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: spring-security
+                  key: spring.user.password
+            - name: DATABASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: application-configmap
+                  key: spring.application.config.db

@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: sm-arch-health-srvice
+  labels:
+    name: arch-health-srvice
+spec:
+  selector:
+    matchLabels:
+      name: arch-health-srvice
+  endpoints:
+    - interval: 15s
+      scheme: http
+      path: '/actuator/prometheus'
+
